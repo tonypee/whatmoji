@@ -23,16 +23,22 @@ export default class View extends React.Component<any> {
 
   onKeyPress(e) {
     if (e.key == "Enter") {
-      store.vote(this.emoji, e.target.value);
+      this.onVote();
     }
   }
 
+  async onVote() {
+    await store.vote(this.emoji, this.input);
+    this.input = "";
+  }
+
   render() {
-    if (!store.data) return "...loading";
+    if (!store.data) return "loading...";
     return (
       <div className={styles}>
         <Link to="/">&lt; Back</Link>
         <div className="char">{this.emoji}</div>
+        <h3>=</h3>
         <ul>
           {store.data.names.map(nameItem => (
             <li>
@@ -46,9 +52,11 @@ export default class View extends React.Component<any> {
         {this.input}
         <br />
         <input
+          placeholder="add a name"
           onChange={e => (this.input = e.target.value)}
           onKeyPress={e => this.onKeyPress(e)}
         />
+        <button onClick={() => this.onVote()}>vote</button>
       </div>
     );
   }
@@ -57,6 +65,7 @@ export default class View extends React.Component<any> {
 const store = observable({
   data: null,
   async load(emoji) {
+    this.data = null;
     const query = `
       query($emoji:String){
         getEmoji(emoji:$emoji) {

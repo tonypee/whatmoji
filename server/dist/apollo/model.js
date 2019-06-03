@@ -53,6 +53,19 @@ exports.model = {
             });
         });
     },
+    getEmojis: function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var rows;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4, db_1.knex.raw("select v.emoji, v.name, count(v.name) as votes  FROM\n        votes v\n        group by(v.emoji, v.name)\n      ")];
+                    case 1:
+                        rows = (_a.sent()).rows;
+                        return [2, rows];
+                }
+            });
+        });
+    },
     getEmoji: function (emoji) {
         return __awaiter(this, void 0, void 0, function () {
             var rows, total;

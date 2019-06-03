@@ -9,6 +9,15 @@ export const model = {
     console.log(names);
   },
 
+  async getEmojis() {
+    const { rows } = await knex.raw(
+      `select v.emoji, v.name, count(v.name) as votes  FROM
+        votes v
+        group by(v.emoji, v.name)
+      `
+    );
+    return rows;
+  },
   async getEmoji(emoji) {
     const { rows } = await knex.raw(
       `

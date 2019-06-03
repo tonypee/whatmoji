@@ -36,6 +36,7 @@ export const schema = makeExecutableSchema({
     # API
 
     type Query {
+      getEmojis: [Emoji]
       getEmoji(emoji: String): Emoji
       test: Boolean
     }
@@ -62,6 +63,9 @@ export const schema = makeExecutableSchema({
     JSON: GraphQLJSON,
     Query: {
       // open
+      getEmojis: async (root, {}) => {
+        return await model.getEmojis();
+      },
       getEmoji: async (root, { emoji }) => {
         return await model.getEmoji(emoji);
       },

@@ -2,6 +2,10 @@ import React from "react";
 import { emojiList } from "../core/data";
 import { css } from "emotion";
 import { Link } from "react-router-dom";
+import { observable, toJS } from "mobx";
+import { queryGraphQl } from "src/core/gql";
+import { observer } from "mobx-react";
+import { arrayToObject } from "src/core/helpers";
 
 const styles = css`
   display: flex;
@@ -34,17 +38,50 @@ const styles = css`
   }
 `;
 
-const c = 4;
-export default () => (
-  <div className={styles}>
-    {emojiList.map((char, i) => (
-      <Link to={`/emoji/${char}`}>
-        <div className="item">
-          <span className="char">{char}</span>
-          <br />
-          Dog shit <span className="number">(23,322)</span>
-        </div>
-      </Link>
-    ))}
-  </div>
-);
+@observer
+export default class Home extends React.Component {
+  async componentDidMount() {
+    await store.load();
+  }
+  render() {
+    if (!store.map) return "loading...";
+    const map = toJS(store.map);
+    return (
+      <div className={styles}>
+        {emojiList.map((emoji, i) => {
+          const match: any = map[emoji];
+          return (
+            <Link to={`/emoji/${emoji}`}>
+              <div className="item">
+                <span className="char">{emoji}</span>
+                <br />
+                {match ? match.name : "..."}
+                {match && <span className="number">({match.votes})</span>}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
+}
+
+const store = observable({
+  other: 123,
+  map: null,
+  async load() {
+    const query = `
+      {
+        getEmojis {
+          emoji
+          name
+          votes
+        }
+      }
+    `;
+    const response = await queryGraphQl(query);
+    console.log("response", response);
+    const data = response.data.getEmojis;
+    this.map = arrayToObject(data, "emoji");
+  }
+});

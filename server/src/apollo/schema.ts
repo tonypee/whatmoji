@@ -36,12 +36,12 @@ export const schema = makeExecutableSchema({
     # API
 
     type Query {
-      getEmojiById: Emoji
+      getEmoji(emoji: String): Emoji
       test: Boolean
     }
 
     type Mutation {
-      addName(input: AddNameInput): Emoji
+      addVote(input: AddNameInput): Name
     }
 
     # Inputs
@@ -62,16 +62,16 @@ export const schema = makeExecutableSchema({
     JSON: GraphQLJSON,
     Query: {
       // open
-      getEmojiById: async (root, { emoji }) => {
-        return await model.getEmojiById(emoji);
+      getEmoji: async (root, { emoji }) => {
+        return await model.getEmoji(emoji);
       },
       test: async () => {
         return await model.test();
       }
     },
     Mutation: {
-      addName: async (root, { input }) => {
-        return await model.addName(input.emoji, input.name);
+      addVote: async (root, { input }) => {
+        return await model.addVote(input.emoji, input.name, 2);
       }
     }
     // Name: {

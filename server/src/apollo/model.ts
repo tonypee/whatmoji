@@ -9,26 +9,36 @@ export const model = {
     console.log(names);
   },
 
-  async getEmojiById(emoji) {
-    //   await knex.raw(`set role postgres`);
+  async getEmoji(emoji) {
+    const { rows } = await knex.raw(
+      `
+      SELECT v.name, v.emoji, count(v.id) as votes
+        FROM votes v 
+        WHERE v.emoji=?  
+        group by (v.name, v.emoji)
+      `,
+      [emoji]
+    );
 
-    const data = await knex("emoji")
-      .where({
-        emoji
-      })
-      .first();
+    const total = await knex(`votes`).where({
+      emoji
+    });
 
-    return data;
+    return {
+      emoji,
+      votes: total.length,
+      names: rows
+    };
   },
 
-  async addName(emoji: String, name: String) {
-    console.log("-- addName", { emoji, name });
+  async addVote(emoji: String, name: String, user) {
+    console.log("-- addVote", { emoji, name });
 
-    const response = await knex("names")
+    const response = await knex("votes")
       .insert({
         emoji,
         name,
-        creator: 1
+        user
       })
       .returning("*");
 

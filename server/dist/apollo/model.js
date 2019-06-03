@@ -53,35 +53,40 @@ exports.model = {
             });
         });
     },
-    getEmojiById: function (emoji) {
+    getEmoji: function (emoji) {
         return __awaiter(this, void 0, void 0, function () {
-            var data;
+            var rows, total;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, db_1.knex("emoji")
-                            .where({
-                            emoji: emoji
-                        })
-                            .first()];
+                    case 0: return [4, db_1.knex.raw("\n      SELECT v.name, v.emoji, count(v.id) as votes\n        FROM votes v \n        WHERE v.emoji=?  \n        group by (v.name, v.emoji)\n      ", [emoji])];
                     case 1:
-                        data = _a.sent();
-                        return [2, data];
+                        rows = (_a.sent()).rows;
+                        return [4, db_1.knex("votes").where({
+                                emoji: emoji
+                            })];
+                    case 2:
+                        total = _a.sent();
+                        return [2, {
+                                emoji: emoji,
+                                votes: total.length,
+                                names: rows
+                            }];
                 }
             });
         });
     },
-    addName: function (emoji, name) {
+    addVote: function (emoji, name, user) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("-- addName", { emoji: emoji, name: name });
-                        return [4, db_1.knex("names")
+                        console.log("-- addVote", { emoji: emoji, name: name });
+                        return [4, db_1.knex("votes")
                                 .insert({
                                 emoji: emoji,
                                 name: name,
-                                creator: 1
+                                user: user
                             })
                                 .returning("*")];
                     case 1:

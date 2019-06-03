@@ -49,17 +49,17 @@ var model_1 = require("./model");
 var graphql_type_json_1 = __importDefault(require("graphql-type-json"));
 var graphql_iso_date_1 = require("graphql-iso-date");
 exports.schema = graphql_tools_1.makeExecutableSchema({
-    typeDefs: apollo_server_core_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    scalar DateTime\n\n    scalar JSON\n\n    type User {\n      id: Int!\n      fbid: String\n      name: String\n      joined: String\n    }\n\n    type Emoji {\n      emoji: String\n      votes: Int\n      name: String\n      names: [Name]\n    }\n\n    type Name {\n      name: String\n      creator: User\n      votes: Int\n      created: DateTime\n    }\n\n    # API\n\n    type Query {\n      getEmojiById: Emoji\n      test: Boolean\n    }\n\n    type Mutation {\n      addName(input: AddNameInput): Emoji\n    }\n\n    # Inputs\n\n    input AddNameInput {\n      emoji: String\n      name: String\n    }\n\n    input VoteInput {\n      emoji: String\n      name: String\n    }\n  "], ["\n    scalar DateTime\n\n    scalar JSON\n\n    type User {\n      id: Int!\n      fbid: String\n      name: String\n      joined: String\n    }\n\n    type Emoji {\n      emoji: String\n      votes: Int\n      name: String\n      names: [Name]\n    }\n\n    type Name {\n      name: String\n      creator: User\n      votes: Int\n      created: DateTime\n    }\n\n    # API\n\n    type Query {\n      getEmojiById: Emoji\n      test: Boolean\n    }\n\n    type Mutation {\n      addName(input: AddNameInput): Emoji\n    }\n\n    # Inputs\n\n    input AddNameInput {\n      emoji: String\n      name: String\n    }\n\n    input VoteInput {\n      emoji: String\n      name: String\n    }\n  "]))),
+    typeDefs: apollo_server_core_1.gql(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    scalar DateTime\n\n    scalar JSON\n\n    type User {\n      id: Int!\n      fbid: String\n      name: String\n      joined: String\n    }\n\n    type Emoji {\n      emoji: String\n      votes: Int\n      name: String\n      names: [Name]\n    }\n\n    type Name {\n      name: String\n      creator: User\n      votes: Int\n      created: DateTime\n    }\n\n    # API\n\n    type Query {\n      getEmoji(emoji: String): Emoji\n      test: Boolean\n    }\n\n    type Mutation {\n      addVote(input: AddNameInput): Name\n    }\n\n    # Inputs\n\n    input AddNameInput {\n      emoji: String\n      name: String\n    }\n\n    input VoteInput {\n      emoji: String\n      name: String\n    }\n  "], ["\n    scalar DateTime\n\n    scalar JSON\n\n    type User {\n      id: Int!\n      fbid: String\n      name: String\n      joined: String\n    }\n\n    type Emoji {\n      emoji: String\n      votes: Int\n      name: String\n      names: [Name]\n    }\n\n    type Name {\n      name: String\n      creator: User\n      votes: Int\n      created: DateTime\n    }\n\n    # API\n\n    type Query {\n      getEmoji(emoji: String): Emoji\n      test: Boolean\n    }\n\n    type Mutation {\n      addVote(input: AddNameInput): Name\n    }\n\n    # Inputs\n\n    input AddNameInput {\n      emoji: String\n      name: String\n    }\n\n    input VoteInput {\n      emoji: String\n      name: String\n    }\n  "]))),
     resolvers: {
         DateTime: graphql_iso_date_1.GraphQLDateTime,
         JSON: graphql_type_json_1.default,
         Query: {
-            getEmojiById: function (root, _a) {
+            getEmoji: function (root, _a) {
                 var emoji = _a.emoji;
                 return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_b) {
                         switch (_b.label) {
-                            case 0: return [4, model_1.model.getEmojiById(emoji)];
+                            case 0: return [4, model_1.model.getEmoji(emoji)];
                             case 1: return [2, _b.sent()];
                         }
                     });
@@ -75,12 +75,12 @@ exports.schema = graphql_tools_1.makeExecutableSchema({
             }); }
         },
         Mutation: {
-            addName: function (root, _a) {
+            addVote: function (root, _a) {
                 var input = _a.input;
                 return __awaiter(_this, void 0, void 0, function () {
                     return __generator(this, function (_b) {
                         switch (_b.label) {
-                            case 0: return [4, model_1.model.addName(input.emoji, input.name)];
+                            case 0: return [4, model_1.model.addVote(input.emoji, input.name, 2)];
                             case 1: return [2, _b.sent()];
                         }
                     });

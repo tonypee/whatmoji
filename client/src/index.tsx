@@ -1,17 +1,10 @@
 // see https://react-firebase-js.com/docs/guides/build-a-react-app-with-firebase-auth-and-realtime-database/add-google-and-anonymous-auth
 import React from "react";
 import ReactDOM from "react-dom";
-import firebase from "firebase/app";
-import "firebase/auth";
-import { config } from "./config";
 import "./styles.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import View from "./pages/View";
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
 
 function AppRouter() {
   return (
@@ -26,6 +19,10 @@ function AppRouter() {
       </Router>
     </div>
   );
+}
+
+if ((module as any).hot) {
+  (module as any).hot.accept();
 }
 
 const rootElement = document.getElementById("root");

@@ -4,7 +4,7 @@ import rest from "./rest";
 import apollo from "./apollo";
 import bodyParser from "body-parser";
 
-const port = process.env.LOCALDEV == "true" ? 4001 : 80;
+const port = process.env.PORT || 4001;
 const host = "0.0.0.0";
 
 const app = express();

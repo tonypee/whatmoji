@@ -5,19 +5,16 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@react-firebase/auth": "^0.1.9",
-    "@types/jest": "^24.0.13",
+    "@emotion/core": "^10.0.10",
     "@types/node": "^12.0.4",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
     "emotion": "^10.0.9",
-    "firebase": "5.10.1",
     "mobx": "^5.9.4",
     "mobx-react": "^6.0.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
     "react-scripts-ts": "^3.1.0"
   },
   "devDependencies": {

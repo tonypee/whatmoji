@@ -3,10 +3,9 @@ import { knex } from "../core/db";
 export const model = {
   async test() {
     //   await knex.raw(`set role postgres`);
-
-    console.log(123);
-    const names = await knex("names");
-    console.log(names);
+    // console.log(123);
+    // const names = await knex("names");
+    // console.log(names);
   },
 
   async getEmojis() {
@@ -18,6 +17,7 @@ export const model = {
     );
     return rows;
   },
+
   async getEmoji(emoji) {
     const { rows } = await knex.raw(
       `

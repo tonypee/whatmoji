@@ -6,8 +6,22 @@ import { observable } from "mobx";
 import { observer } from "mobx-react";
 
 const styles = css`
+  text-align: center;
+
   .char {
     font-size: 140px;
+  }
+  input {
+    border: 2px solid black;
+    padding: 10px;
+  }
+  button {
+    background-color: black;
+    padding: 10px;
+    color: white;
+  }
+  li {
+    list-style-type: none;
   }
 `;
 
@@ -35,28 +49,29 @@ export default class View extends React.Component<any> {
   render() {
     if (!store.data) return "loading...";
     return (
-      <div className={styles}>
+      <div>
         <Link to="/">&lt; Back</Link>
-        <div className="char">{this.emoji}</div>
-        <h3>=</h3>
-        <ul>
-          {store.data.names.map(nameItem => (
-            <li>
-              {nameItem.name} ({nameItem.votes}){" "}
-              <button onClick={() => store.vote(this.emoji, nameItem.name)}>
-                +
-              </button>
-            </li>
-          ))}
-        </ul>
-        {this.input}
-        <br />
-        <input
-          placeholder="add a name"
-          onChange={e => (this.input = e.target.value)}
-          onKeyPress={e => this.onKeyPress(e)}
-        />
-        <button onClick={() => this.onVote()}>vote</button>
+        <div className={styles}>
+          <div className="char">{this.emoji}</div>
+          <h3>=</h3>
+          <ul>
+            {store.data.names.map(nameItem => (
+              <li>
+                {nameItem.name} ({nameItem.votes}){" "}
+                <button onClick={() => store.vote(this.emoji, nameItem.name)}>
+                  +
+                </button>
+              </li>
+            ))}
+          </ul>
+          <br />
+          <input
+            placeholder="add a name"
+            onChange={e => (this.input = e.target.value)}
+            onKeyPress={e => this.onKeyPress(e)}
+          />
+          <button onClick={() => this.onVote()}>vote</button>
+        </div>
       </div>
     );
   }
@@ -65,7 +80,6 @@ export default class View extends React.Component<any> {
 const store = observable({
   data: null,
   async load(emoji) {
-    this.data = null;
     const query = `
       query($emoji:String){
         getEmoji(emoji:$emoji) {

@@ -78,10 +78,5 @@ export const schema = makeExecutableSchema({
         return await model.addVote(input.emoji, input.name, 2);
       }
     }
-    // Name: {
-    //   async user(device_event) {
-    //     //return await model.getDeviceById(device_event.device_id);
-    //   }
-    // }
   }
 });

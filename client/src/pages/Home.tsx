@@ -10,9 +10,10 @@ import { arrayToObject } from "src/core/helpers";
 const styles = css`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 
   .char {
-    font-size: 40px;
+    font-size: 60px;
   }
   .item {
     align-items: center;

@@ -39,17 +39,8 @@ var db_1 = require("../core/db");
 exports.model = {
     test: function () {
         return __awaiter(this, void 0, void 0, function () {
-            var names;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log(123);
-                        return [4, db_1.knex("names")];
-                    case 1:
-                        names = _a.sent();
-                        console.log(names);
-                        return [2];
-                }
+                return [2];
             });
         });
     },

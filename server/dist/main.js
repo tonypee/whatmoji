@@ -8,7 +8,7 @@ var cors_1 = __importDefault(require("cors"));
 var rest_1 = __importDefault(require("./rest"));
 var apollo_1 = __importDefault(require("./apollo"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var port = process.env.LOCALDEV == "true" ? 4001 : 80;
+var port = process.env.PORT || 4001;
 var host = "0.0.0.0";
 var app = express_1.default();
 app["restPath"] = "/";

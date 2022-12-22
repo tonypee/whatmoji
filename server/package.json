@@ -24,7 +24,7 @@
     "expo-server-sdk": "^3.3.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.16.5",
     "node-fetch": "^2.3.0",
     "pg": "^7.9.0",
